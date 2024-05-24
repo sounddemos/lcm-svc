@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="OlaWod">
 
-    <title>LDM-SVC Demo Page</title>
+    <title>LCM-SVC Demo Page</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +44,7 @@
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#abstract">Abstract</a>
 					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#s2s">Seen-to-Seen</a></li>
-					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#u2s">Zero-shot Unseen-to-Unseen</a></li>
+					<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#u2s">Zero-shot unseen_lcm-to-unseen_lcm</a></li>
 				</ul>
 			</div>
 		</div>
@@ -56,9 +56,9 @@
             <div class="row">
                 <div class="col-lg-10 col-md-10 mx-auto">
                     <div class="site-heading">
-                        <h1>LDM-SVC Demo</h1>
+                        <h1>LCM-SVC Demo</h1>
                         <span class="subheading">
-                          LDM-SVC: Latent Diffusion Model Based Zero-Shot Any-to-Any Singing Voice Conversion with Singer Guidance
+                            LCM-SVC: Latent Diffusion Model Based Singing Voice Conversion with Inference Acceleration via Latent Consistency Distillation
                         </span>
                     </div>
                 </div>
@@ -78,13 +78,32 @@
                         Abstract
                     </h2>
                     <p>
-                      Any-to-any singing voice conversion (SVC) is an interesting audio editing technique, aiming to convert the singing voice of one singer into that of another, given only a few seconds of singing data. However, during the conversion process, the issue of timbre leakage is inevitable: the converted singing voice still sounds like the original singer's voice. To tackle this, we propose a latent diffusion model for SVC (LDM-SVC)  in this work, which attempts to perform SVC in the latent space using an LDM. We pretrain a variational autoencoder structure using the noted open-source So-VITS-SVC project based on the VITS framework, which is then used for the LDM training. Besides, we propose a singer guidance training method based on  classifier-free guidance to further suppress the timbre of the original singer. Experimental results show the superiority of  the proposed method over previous works in both subjective and objective evaluations of timbre similarity. 
+                        Any-to-any Singing Voice Conversion (SVC) aims to transfer a target singer’s timbre to other songs using a short voice sample. Many SVC methods have achieved impressive results using diffusion models, which, however often suffer from high latency caused by inference steps. In this paper, we propose LCM-SVC, a latent consistency distillation (LCD) based latent diffusion model (LDM) to improve the inference speed. By leveraging significant improvements in timbre decoupling and sound quality offered by LDM, we can distill a pre-trained LDM, enabling one-step or multi-step inference while maintaining high performance. Results show that our method can significantly reduce the inference time and largely preserve the sound quality and timbre similarity.
 						
 					</p>
                 </div>
                 <!-- ![arch](images/pic1.png) -->
-                <img src="images/pic1.png" alt="ldm-svc" width="1200">
-				
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Side by Side Images</title>
+                    <style>
+                        .image-container {
+                            display: flex;
+                            justify-content: center; /* Optional: Center the images horizontally */
+                            align-items: center; /* Optional: Center the images vertically */
+                        }
+                        .image-container img {
+                            margin: 10px; /* Optional: Add some space between the images */
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="image-container">
+                        <img src="images/lcm.png" alt="lcm-svc" width="800">
+                        <img src="images/cm.png" alt="lcm-svc" width="400">
+                    </div>
+                </body>
                 <div class="post-preview">
                     <h2 class="post-title">
                         Seen-to-Seen Singing Voice Conversion
@@ -95,6 +114,7 @@
                                 <th scope="col">Source</th>
                                 <th scope="col">Target</th>
                                 <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,39 +122,46 @@
                             <tr>
                                 <td>
                                   <br>
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/src/M2M-3.wav">
-                                    </audio>
-                                </td>
-                                <td>
-                                  <br>
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/ref/M2M-3.wav">
-                                    </audio>
-                                </td>
-                                <td>
-									FastSVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/0/M2M-3.wav">
-                                    </audio> 
-									DiffSVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/1/M2M-3.wav">
-                                    </audio>
-									So-VITS-SVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/2/M2M-3.wav">
-                                    </audio>
-                                </td>
-                                <td>
-								    LDM-SVC w/o SD
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/3/M2M-3.wav">
-                                    </audio> 
-									LDM-SVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2M/4/M2M-3.wav">
-                                    </audio>
+                                  <audio controls preload="none">
+                                    <source src="samples/seen_lcm/src/13.wav">
+                                </audio>
+                            </td>
+                            <td><br>
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/ref/13.wav">
+                                </audio>
+                            </td>
+                            <td>
+                                DiffSVC
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/0/13.wav">
+                                </audio>
+                                So-VITS-SVC
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/1/13.wav">
+                                </audio>
+                                CoMoSVC
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/2/13.wav">
+                                </audio> 
+                            </td>
+                            <td>
+                                LCM-SVC-T
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-T/13.wav">
+                                </audio> 
+                                LCM-SVC-4
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-1step/13.wav">
+                                </audio>
+                                LCM-SVC-2
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-2step/13.wav">
+                                </audio>
+                                LCM-SVC-1
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-4step/13.wav">
+                                </audio>
                                 </td>
                             </tr>
                   <h3 class="post-meta" id="s2s">
@@ -146,6 +173,7 @@
                                 <th scope="col">Source</th>
                                 <th scope="col">Target</th>
                                 <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -153,36 +181,44 @@
                             <tr>
                                 <td><br>
                                     <audio controls preload="none">
-                                        <source src="samples/seen/M2F/src/M2F-1.wav">
+                                        <source src="samples/seen_lcm/src/6.wav">
                                     </audio>
                                 </td>
                                 <td><br>
                                     <audio controls preload="none">
-                                        <source src="samples/seen/M2F/ref/M2F-1.wav">
+                                        <source src="samples/seen_lcm/ref/6.wav">
                                     </audio>
                                 </td>
                                 <td>
-									FastSVC
+                                    DiffSVC
                                     <audio controls preload="none">
-                                        <source src="samples/seen/M2F/0/M2F-1.wav">
+                                        <source src="samples/seen_lcm/0/6.wav">
+                                    </audio>
+                                    So-VITS-SVC
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/1/6.wav">
+                                    </audio>
+                                    CoMoSVC
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/2/6.wav">
                                     </audio> 
-									DiffSVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2F/1/M2F-1.wav">
-                                    </audio>
-									So-VITS-SVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/M2F/2/M2F-1.wav">
-                                    </audio>
                                 </td>
                                 <td>
-								    LDM-SVC w/o SD
+                                    LCM-SVC-T
                                     <audio controls preload="none">
-                                        <source src="samples/seen/M2F/3/M2F-1.wav">
+                                        <source src="samples/seen_lcm/lcm-T/6.wav">
                                     </audio> 
-									LDM-SVC
+                                    LCM-SVC-4
                                     <audio controls preload="none">
-                                        <source src="samples/seen/M2F/4/M2F-1.wav">
+                                        <source src="samples/seen_lcm/lcm-1step/6.wav">
+                                    </audio>
+                                    LCM-SVC-2
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/lcm-2step/6.wav">
+                                    </audio>
+                                    LCM-SVC-1
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/lcm-4step/6.wav">
                                     </audio>
                                 </td>
                             </tr>
@@ -198,6 +234,7 @@
                                 <th scope="col">Source</th>
                                 <th scope="col">Target</th>
                                 <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -205,38 +242,45 @@
                             <tr>
                                 <td><br>
                                     <audio controls preload="none">
-                                        <source src="samples/seen/F2M/src/F2M-0.wav">
+                                        <source src="samples/seen_lcm/src/19.wav">
                                     </audio>
                                 </td>
                                 <td><br>
                                     <audio controls preload="none">
-                                        <source src="samples/seen/F2M/ref/F2M-0.wav">
+                                        <source src="samples/seen_lcm/ref/19.wav">
                                     </audio>
                                 </td>
                                 <td>
-                  FastSVC
+                                    DiffSVC
                                     <audio controls preload="none">
-                                        <source src="samples/seen/F2M/0/F2M-0.wav">
+                                        <source src="samples/seen_lcm/0/19.wav">
+                                    </audio>
+                                    So-VITS-SVC
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/1/19.wav">
+                                    </audio>
+                                    CoMoSVC
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/2/19.wav">
                                     </audio> 
-                  DiffSVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/F2M/1/F2M-0.wav">
-                                    </audio>
-                  So-VITS-SVC
-                                    <audio controls preload="none">
-                                        <source src="samples/seen/F2M/2/F2M-0.wav">
-                                    </audio>
                                 </td>
                                 <td>
-                    LDM-SVC w/o SD
+                                    LCM-SVC-T
                                     <audio controls preload="none">
-                                        <source src="samples/seen/F2M/3/F2M-0.wav">
+                                        <source src="samples/seen_lcm/lcm-T/19.wav">
                                     </audio> 
-                  LDM-SVC
+                                    LCM-SVC-4
                                     <audio controls preload="none">
-                                        <source src="samples/seen/F2M/4/F2M-0.wav">
+                                        <source src="samples/seen_lcm/lcm-1step/19.wav">
                                     </audio>
-
+                                    LCM-SVC-2
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/lcm-2step/19.wav">
+                                    </audio>
+                                    LCM-SVC-1
+                                    <audio controls preload="none">
+                                        <source src="samples/seen_lcm/lcm-4step/19.wav">
+                                    </audio>
                                 </td>
                             </tr>
                           <h3 class="post-meta" id="s2s">
@@ -248,44 +292,53 @@
                               <th scope="col">Source</th>
                               <th scope="col">Target</th>
                               <th scope="col">Conversion</th>
+                              <th scope="col"></th>
                           </tr>
                       </thead>
                       <tbody>
                           
                           <tr>
                               <td><br>
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/src/F2F-0.wav">
-                                  </audio>
-                              </td>
-                              <td><br>
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/ref/F2F-0.wav">
-                                  </audio>
-                              </td>
-                              <td>
-                FastSVC
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/0/F2F-0.wav">
-                                  </audio> 
-                DiffSVC
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/1/F2F-0.wav">
-                                  </audio>
-                So-VITS-SVC
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/2/F2F-0.wav">
-                                  </audio>
-                              </td>
-                              <td>
-                  LDM-SVC w/o SD
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/3/F2F-0.wav">
-                                  </audio> 
-                LDM-SVC
-                                  <audio controls preload="none">
-                                      <source src="samples/seen/F2F/4/F2F-0.wav">
-                                  </audio>
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/src/4.wav">
+                                </audio>
+                            </td>
+                            <td><br>
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/ref/4.wav">
+                                </audio>
+                            </td>
+                            <td>
+                                DiffSVC
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/0/4.wav">
+                                </audio>
+                                So-VITS-SVC
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/1/4.wav">
+                                </audio>
+                                CoMoSVC
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/2/4.wav">
+                                </audio> 
+                            </td>
+                            <td>
+                                LCM-SVC-T
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-T/4.wav">
+                                </audio> 
+                                LCM-SVC-4
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-1step/4.wav">
+                                </audio>
+                                LCM-SVC-2
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-2step/4.wav">
+                                </audio>
+                                LCM-SVC-1
+                                <audio controls preload="none">
+                                    <source src="samples/seen_lcm/lcm-4step/4.wav">
+                                </audio>
                               </td>
                           </tr>
                 <h3 class="post-meta" id="s2s">
@@ -304,47 +357,56 @@
               <table class="table">
                   <thead>
                       <tr>
-                          <th scope="col">Source</th>
-                          <th scope="col">Target</th>
-                          <th scope="col">Conversion</th>
+                            <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                       </tr>
                   </thead>
                   <tbody>
                       
                       <tr>
                           <td><br>
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/src/M2M-2.wav">
-                              </audio>
-                          </td>
-                          <td><br>
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/ref/M2M-2.wav">
-                              </audio>
-                          </td>
-                          <td>
-            FastSVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/0/M2M-2.wav">
-                              </audio> 
-            DiffSVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/1/M2M-2.wav">
-                              </audio>
-            So-VITS-SVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/2/M2M-2.wav">
-                              </audio>
-                          </td>
-                          <td>
-              LDM-SVC w/o SD
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/3/M2M-2.wav">
-                              </audio> 
-            LDM-SVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2M/4/M2M-2.wav">
-                              </audio>
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/src/17.wav">
+                            </audio>
+                        </td>
+                        <td><br>
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/ref/17.wav">
+                            </audio>
+                        </td>
+                        <td>
+                            DiffSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/0/17.wav">
+                            </audio>
+                            So-VITS-SVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/1/17.wav">
+                            </audio>
+                            CoMoSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/2/17.wav">
+                            </audio> 
+                        </td>
+                        <td>
+                            LCM-SVC-T
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-T/17.wav">
+                            </audio> 
+                            LCM-SVC-4
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-1step/17.wav">
+                            </audio>
+                            LCM-SVC-2
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-2step/17.wav">
+                            </audio>
+                            LCM-SVC-1
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-4step/17.wav">
+                            </audio>
                           </td>
                       </tr>
             <h3 class="post-meta" id="s2s">
@@ -353,47 +415,56 @@
               <table class="table">
                   <thead>
                       <tr>
-                          <th scope="col">Source</th>
-                          <th scope="col">Target</th>
-                          <th scope="col">Conversion</th>
+                            <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                       </tr>
                   </thead>
                   <tbody>
                       
                       <tr>
                           <td><br>
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/src/M2F-7.wav">
-                              </audio>
-                          </td>
-                          <td><br>
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/ref/M2F-7.wav">
-                              </audio>
-                          </td>
-                          <td>
-            FastSVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/0/M2F-7.wav">
-                              </audio> 
-            DiffSVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/1/M2F-7.wav">
-                              </audio>
-            So-VITS-SVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/2/M2F-7.wav">
-                              </audio>
-                          </td>
-                          <td>
-              LDM-SVC w/o SD
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/3/M2F-7.wav">
-                              </audio> 
-            LDM-SVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/M2F/4/M2F-7.wav">
-                              </audio>
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/src/8.wav">
+                            </audio>
+                        </td>
+                        <td><br>
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/ref/8.wav">
+                            </audio>
+                        </td>
+                        <td>
+                            DiffSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/0/8.wav">
+                            </audio>
+                            So-VITS-SVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/1/8.wav">
+                            </audio>
+                            CoMoSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/2/8.wav">
+                            </audio> 
+                        </td>
+                        <td>
+                            LCM-SVC-T
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-T/8.wav">
+                            </audio> 
+                            LCM-SVC-4
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-1step/8.wav">
+                            </audio>
+                            LCM-SVC-2
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-2step/8.wav">
+                            </audio>
+                            LCM-SVC-1
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-4step/8.wav">
+                            </audio>
                           </td>
                       </tr>
                 <h3 class="post-meta" id="s2s">
@@ -404,47 +475,56 @@
               <table class="table">
                   <thead>
                       <tr>
-                          <th scope="col">Source</th>
-                          <th scope="col">Target</th>
-                          <th scope="col">Conversion</th>
+                            <th scope="col">Source</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                       </tr>
                   </thead>
                   <tbody>
                       
                       <tr>
                           <td><br>
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/src/F2M-4.wav">
-                              </audio>
-                          </td>
-                          <td><br>
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/ref/F2M-4.wav">
-                              </audio>
-                          </td>
-                          <td>
-            FastSVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/0/F2M-4.wav">
-                              </audio> 
-            DiffSVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/1/F2M-4.wav">
-                              </audio>
-            So-VITS-SVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/2/F2M-4.wav">
-                              </audio>
-                          </td>
-                          <td>
-              LDM-SVC w/o SD
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/3/F2M-4.wav">
-                              </audio> 
-            LDM-SVC
-                              <audio controls preload="none">
-                                  <source src="samples/unseen/F2M/4/F2M-4.wav">
-                              </audio>
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/src/13.wav">
+                            </audio>
+                        </td>
+                        <td><br>
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/ref/13.wav">
+                            </audio>
+                        </td>
+                        <td>
+                            DiffSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/0/13.wav">
+                            </audio>
+                            So-VITS-SVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/1/13.wav">
+                            </audio>
+                            CoMoSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/2/13.wav">
+                            </audio> 
+                        </td>
+                        <td>
+                            LCM-SVC-T
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-T/13.wav">
+                            </audio> 
+                            LCM-SVC-4
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-1step/13.wav">
+                            </audio>
+                            LCM-SVC-2
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-2step/13.wav">
+                            </audio>
+                            LCM-SVC-1
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-4step/13.wav">
+                            </audio>
                           </td>
                       </tr>
                     <h3 class="post-meta" id="s2s">
@@ -454,8 +534,9 @@
                 <thead>
                     <tr>
                         <th scope="col">Source</th>
-                        <th scope="col">Target</th>
-                        <th scope="col">Conversion</th>
+                                <th scope="col">Target</th>
+                                <th scope="col">Conversion</th>
+                                <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -463,36 +544,44 @@
                     <tr>
                         <td><br>
                             <audio controls preload="none">
-                                <source src="samples/unseen/F2F/src/F2F-5.wav">
+                                <source src="samples/unseen_lcm/src/4.wav">
                             </audio>
                         </td>
                         <td><br>
                             <audio controls preload="none">
-                                <source src="samples/unseen/F2F/ref/F2F-5.wav">
+                                <source src="samples/unseen_lcm/ref/4.wav">
                             </audio>
                         </td>
                         <td>
-          FastSVC
+                            DiffSVC
                             <audio controls preload="none">
-                                <source src="samples/unseen/F2F/0/F2F-5.wav">
+                                <source src="samples/unseen_lcm/0/4.wav">
+                            </audio>
+                            So-VITS-SVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/1/4.wav">
+                            </audio>
+                            CoMoSVC
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/2/4.wav">
                             </audio> 
-          DiffSVC
-                            <audio controls preload="none">
-                                <source src="samples/unseen/F2F/1/F2F-5.wav">
-                            </audio>
-          So-VITS-SVC
-                            <audio controls preload="none">
-                                <source src="samples/unseen/F2F/2/F2F-5.wav">
-                            </audio>
                         </td>
                         <td>
-            LDM-SVC w/o SD
+                            LCM-SVC-T
                             <audio controls preload="none">
-                                <source src="samples/unseen/F2F/3/F2F-5.wav">
+                                <source src="samples/unseen_lcm/lcm-T/4.wav">
                             </audio> 
-          LDM-SVC
+                            LCM-SVC-4
                             <audio controls preload="none">
-                                <source src="samples/unseen/F2F/4/F2F-5.wav">
+                                <source src="samples/unseen_lcm/lcm-1step/4.wav">
+                            </audio>
+                            LCM-SVC-2
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-2step/4.wav">
+                            </audio>
+                            LCM-SVC-1
+                            <audio controls preload="none">
+                                <source src="samples/unseen_lcm/lcm-4step/4.wav">
                             </audio>
                         </td>
                     </tr>
